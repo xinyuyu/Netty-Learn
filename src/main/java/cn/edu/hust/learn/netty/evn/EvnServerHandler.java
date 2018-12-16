@@ -10,7 +10,8 @@ import io.netty.util.CharsetUtil;
 public class EvnServerHandler extends SimpleChannelInboundHandler<HttpObject> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception {
-        if (msg instanceof HttpObject) {
+        // 解决服务打印异常信息问题
+        if (msg instanceof HttpRequest) {
             ByteBuf content = Unpooled.copiedBuffer("hello world", CharsetUtil.UTF_8);
 
             FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
