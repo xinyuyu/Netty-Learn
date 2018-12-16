@@ -7,5 +7,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    "io.netty:netty-all:4.1.10.Final"
+    compile(
+            "io.netty:netty-all:4.1.10.Final"
+    )
 }
