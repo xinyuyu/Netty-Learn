@@ -22,4 +22,49 @@ public class EvnServerHandler extends SimpleChannelInboundHandler<HttpObject> {
         }
     }
 
+    // 各种回调函数的测试
+    /*
+        调用顺序：
+        add------chandlerAdded 被调用
+        register------channelRegistered 被调用
+        active------channelActive 被调用
+        inactive------channelInactive 被调用了
+        unregister------channelUnregistered 被调用
+        remove------chandlerRemoved 被调用
+     */
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        // 通道处于活动状态时候调用的方法
+        System.out.println("active------channelActive 被调用");
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        // 通道释放时候调用的方法
+        System.out.println("inactive------channelInactive 被调用了");
+    }
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        // 通道被注册
+        System.out.println("register------channelRegistered 被调用");
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        // 通道取消注册
+        System.out.println("unregister------channelUnregistered 被调用");
+    }
+
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        // 被处理
+        System.out.println("add------chandlerAdded 被调用");
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("remove------chandlerRemoved 被调用");
+    }
 }
