@@ -10,15 +10,15 @@ import io.netty.util.CharsetUtil;
 public class EvnServerHandler extends SimpleChannelInboundHandler<HttpObject> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception {
+        if (msg instanceof HttpObject) {
+            ByteBuf content = Unpooled.copiedBuffer("hello world", CharsetUtil.UTF_8);
 
-        ByteBuf content = Unpooled.copiedBuffer("hello world", CharsetUtil.UTF_8);
+            FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
+            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
+            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
 
-        FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
-
-        response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
-
-        response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
-
-        ctx.writeAndFlush(response);
+            ctx.writeAndFlush(response);
+        }
     }
+
 }
